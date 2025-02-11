@@ -63,7 +63,7 @@ async function detectLanguage(text) {
 }
 
 handleButtonTrigger = async () => {
-    tabInfo.textContent = "Loading..."
+    tabInfo.textContent = "Translating..."
     try {
         const clipboardText = await navigator.clipboard.readText();
         const translatedText = await translateClipboardText(clipboardText);
