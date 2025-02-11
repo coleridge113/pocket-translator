@@ -1,4 +1,5 @@
 const apiKey = "AIzaSyDJdtrcFr36QABN67S-F7qvPIW3mqKxKAQ";
+const tabInfo = document.getElementById('tab-info');
 
 async function translateClipboardText(clipboardText) {
     try {
@@ -61,13 +62,24 @@ async function detectLanguage(text) {
     return data.candidates?.[0]?.content?.parts?.[0]?.text.trim() || "Unknown";
 }
 
-document.getElementById('btn').addEventListener('click', async (event) => {
-    event.preventDefault();
+handleButtonTrigger = async () => {
+    tabInfo.textContent = "Loading..."
     try {
         const clipboardText = await navigator.clipboard.readText();
         const translatedText = await translateClipboardText(clipboardText);
-        document.getElementById('tab-info').textContent = translatedText;
+        tabInfo.textContent = translatedText;
     } catch (err) {
-        document.getElementById('tab-info').textContent = `Error: ${err.message}`;
+        tabInfo.textContent = `Error: ${err.message}`;
     }
+}
+
+document.getElementById('btn').addEventListener('click', async (event) => {
+    event.preventDefault();
+    handleButtonTrigger();
 });
+
+document.addEventListener('keydown', async (event) => {
+    if (event.key === ' ') {
+        handleButtonTrigger();
+    }
+})
