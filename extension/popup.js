@@ -1,34 +1,20 @@
-// document.addEventListener('DOMContentLoaded', () => {
-//     chrome.runtime.sendMessage({ action: "getActiveTabInfo" }, (response) => {
-//         if (response) {
-//             document.getElementById('tab-info').textContent = response.clipboardText;
-//         } else {
-//             document.getElementById('tab-info').textContent = "Unable to fetch";
-//         }
-//     })
-// })
-
-const apiKey = "AIzaSyDJdtrcFr36QABN67S-F7qvPIW3mqKxKAQ"
-const toEngPrompt = "translate this to English: ";
-const toJapPrompt = "translate this to Japanese: ";
-
-
-document.getElementById('btn').addEventListener('click', async (event) => {
-    event.preventDefault();
-
-    try {
-        const clipboardText = await navigator.clipboard.readText();
-
-        const translatedText = await translateClipboardText(clipboardText);
-        document.getElementById('tab-info').textContent = translatedText;
-    } catch (err) {
-        document.getElementById('tab-info').textContent = `Error: ${err.message}`;
-    }
-});
-
+const apiKey = "AIzaSyDJdtrcFr36QABN67S-F7qvPIW3mqKxKAQ";
 
 async function translateClipboardText(clipboardText) {
     try {
+        // Step 1: Detect Language
+        const detectedLanguage = await detectLanguage(clipboardText);
+        console.log("Detected Language:", detectedLanguage);
+
+        // Step 2: Decide Translation Direction
+        let prompt;
+        if (detectedLanguage === "Japanese") {
+            prompt = "Translate this to English: " + clipboardText;
+        } else {
+            prompt = "Translate this to Japanese: " + clipboardText;
+        }
+
+        // Step 3: Translate using Gemini API
         const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${apiKey}`, {
             method: "POST",
             headers: {
@@ -36,12 +22,12 @@ async function translateClipboardText(clipboardText) {
             },
             body: JSON.stringify({
                 contents: [{
-                    parts: [{ text: "Translate this to English: " + clipboardText }]
+                    parts: [{ text: prompt }]
                 }]
             })
         });
 
-        const data = await response.json(); // Parse response as JSON
+        const data = await response.json();
 
         if (!response.ok) {
             console.error("API Error Response:", data);
@@ -54,3 +40,39 @@ async function translateClipboardText(clipboardText) {
         return `Error: ${error.message}`;
     }
 }
+
+// Function to Detect Language
+async function detectLanguage(text) {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${apiKey}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            contents: [{
+                parts: [{ text: `Detect the language of this text and respond with only "English" or "Japanese": ${text}` }]
+            }]
+        })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        console.error("Language Detection Error:", data);
+        return "Unknown";
+    }
+
+    return data.candidates?.[0]?.content?.parts?.[0]?.text.trim() || "Unknown";
+}
+
+// Event Listener for Button Click
+document.getElementById('btn').addEventListener('click', async (event) => {
+    event.preventDefault();
+    try {
+        const clipboardText = await navigator.clipboard.readText();
+        const translatedText = await translateClipboardText(clipboardText);
+        document.getElementById('tab-info').textContent = translatedText;
+    } catch (err) {
+        document.getElementById('tab-info').textContent = `Error: ${err.message}`;
+    }
+});
