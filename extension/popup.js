@@ -2,11 +2,9 @@ const apiKey = "AIzaSyDJdtrcFr36QABN67S-F7qvPIW3mqKxKAQ";
 
 async function translateClipboardText(clipboardText) {
     try {
-        // Step 1: Detect Language
         const detectedLanguage = await detectLanguage(clipboardText);
         console.log("Detected Language:", detectedLanguage);
 
-        // Step 2: Decide Translation Direction
         let prompt;
         if (detectedLanguage === "Japanese") {
             prompt = "Translate this to English: " + clipboardText;
@@ -14,7 +12,6 @@ async function translateClipboardText(clipboardText) {
             prompt = "Translate this to Japanese: " + clipboardText;
         }
 
-        // Step 3: Translate using Gemini API
         const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${apiKey}`, {
             method: "POST",
             headers: {
@@ -41,7 +38,6 @@ async function translateClipboardText(clipboardText) {
     }
 }
 
-// Function to Detect Language
 async function detectLanguage(text) {
     const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${apiKey}`, {
         method: "POST",
@@ -65,7 +61,6 @@ async function detectLanguage(text) {
     return data.candidates?.[0]?.content?.parts?.[0]?.text.trim() || "Unknown";
 }
 
-// Event Listener for Button Click
 document.getElementById('btn').addEventListener('click', async (event) => {
     event.preventDefault();
     try {
