@@ -1,6 +1,8 @@
 const apiKey = "AIzaSyDJdtrcFr36QABN67S-F7qvPIW3mqKxKAQ";
 const tabInfo = document.getElementById('tab-info');
 
+var jpnFlag;
+
 async function translateClipboardText(clipboardText) {
     try {
         const detectedLanguage = await detectLanguage(clipboardText);
@@ -9,8 +11,10 @@ async function translateClipboardText(clipboardText) {
         let prompt;
         if (detectedLanguage === "Japanese") {
             prompt = "Translate this to English: " + clipboardText;
+            jpnFlag = true;
         } else {
             prompt = "Translate this to Japanese: " + clipboardText;
+            jpnFlag = false;
         }
 
         const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${apiKey}`, {
@@ -63,7 +67,7 @@ async function detectLanguage(text) {
 }
 
 handleButtonTrigger = async () => {
-    tabInfo.textContent = "Translating..."
+    tabInfo.textContent = jpnFlag ? "翻訳中..." : "Translating...";
     try {
         const clipboardText = await navigator.clipboard.readText();
         const translatedText = await translateClipboardText(clipboardText);
