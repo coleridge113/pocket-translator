@@ -9,7 +9,8 @@ No more alt tabbing for your Jap <-> Eng translation needs!
 ## Installation
 
 1. Clone the repository from https://github.com/sono-jugyoin/pocket-translator.git
-	Type the following in cmd, powershell, or bash:
+	
+ Type the following in cmd, powershell, or bash:
 	```
 	git clone https://github.com/sono-jugyoin/pocket-translator.git
 	```
