@@ -3,6 +3,7 @@
 
 No more alt tabbing for your Jap <-> Eng translation needs!
 
+
   
 
 ## Installation
@@ -24,9 +25,9 @@ No more alt tabbing for your Jap <-> Eng translation needs!
 		- Suggest to use `ctrl + space`
 
 ## How to Use
-1. Copy the text you wish to translate. 
-	- If text is Japanese, it will be translated to English
-	- If text is English, it will be translated to Japanese
+1. Copy the text you wish to translate
+	- If text is in Japanese, it will be translated to English
+	- If text is in English, it will be translated to Japanese
 
 	![text-to-copy](img/pt-copy.png)
 2. While in Chrome, press your keyboard shortcut or select the `extensions` button (found after the Chrome address bar)
