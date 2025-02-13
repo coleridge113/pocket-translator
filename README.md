@@ -27,11 +27,15 @@ No more alt tabbing for your Jap <-> Eng translation needs!
 1. Copy the text you wish to translate. 
 	- If text is Japanese, it will be translated to English
 	- If text is English, it will be translated to Japanese
+
 	![text-to-copy](img/pt-copy.png)
 2. While in Chrome, press your keyboard shortcut or select the `extensions` button (found after the Chrome address bar)
 	- A pop up will appear
+
 	![pop-up](img/pt-initial.png)
 3. Press `space` to translate your text or click the `Translate from Clipboard` button
+
 	![translating](img/pt-processing.png)
 4. Your translation will appear in the popup momentarily
+
 	![output](img/pt-output.png)
