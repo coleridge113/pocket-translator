@@ -11,8 +11,5 @@
         "activeTab",
         "tabs",
         "clipboardRead"
-    ],
-    "background": {
-        "service_worker": "background.js"
-    }
+    ]
 }
