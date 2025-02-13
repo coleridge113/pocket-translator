@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Pocket Translator",
     "version": "1.0",
-    "description": "A pocket translator so you won't have to keep going to ChatGPT.",
+    "description": "A pocket translator so you won't have to keep alt-tabbing to ChatGPT.",
     "action": {
         "default_popup": "popup.html",
         "default_icon": "icon.png"
