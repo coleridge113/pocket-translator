@@ -1,6 +1,6 @@
 const apiKey = "AIzaSyDJdtrcFr36QABN67S-F7qvPIW3mqKxKAQ";
 const tabInfo = document.getElementById('tab-info');
-const kanjiListContainer = document.getElementById('kanji-list'); // UL for Kanji-Hiragana list
+const kanjiListContainer = document.getElementById('kanji-list');
 
 async function translateClipboardText(clipboardText) {
     try {
@@ -76,18 +76,17 @@ async function detectLanguage(text) {
 
 async function handleButtonTrigger() {
     tabInfo.textContent = "Translating...";
-    kanjiListContainer.innerHTML = ""; // Clear previous Kanji-Hiragana list
+    kanjiListContainer.innerHTML = "";
 
     try {
         const clipboardText = await navigator.clipboard.readText();
         const translatedText = await translateClipboardText(clipboardText);
 
-        // Extract Kanji-Hiragana list if present
-        const kanjiMatches = translatedText.match(/(.+?)\s-\s(.+)/g); // Matches "Kanji - Hiragana" format
+        const kanjiMatches = translatedText.match(/(.+?)\s-\s(.+)/g);
 
         let translationOnly = translatedText;
         if (kanjiMatches) {
-            translationOnly = translatedText.split("\n").filter(line => !line.includes("  - ")).join("\n"); // Remove Kanji-Hiragana lines
+            translationOnly = translatedText.split("\n").filter(line => !line.includes("  - ")).join("\n");
             kanjiMatches.forEach(pair => {
                 const li = document.createElement("li");
                 li.textContent = pair;
@@ -95,7 +94,7 @@ async function handleButtonTrigger() {
             });
         }
 
-        tabInfo.innerHTML = translationOnly.replace(/\n/g, "<br>"); // Display translation in tabInfo
+        tabInfo.innerHTML = translationOnly.replace(/\n/g, "<br>");
     } catch (err) {
         tabInfo.textContent = `Error: ${err.message}`;
     }
