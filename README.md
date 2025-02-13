@@ -10,17 +10,18 @@ No more alt tabbing for your Jap <-> Eng translation needs!
 
 1. Clone the repository from https://github.com/sono-jugyoin/pocket-translator.git
 	
- Type the following in cmd, powershell, or bash:
+	 Type the following in cmd, powershell, or bash:
+
 	```
 	git clone https://github.com/sono-jugyoin/pocket-translator.git
 	```
 
-2. Install as a Chrome Extension
+3. Install as a Chrome Extension
 	1.	 Type `chrome://extensions` in the Chrome Web Browser URL
 	2.	 Press `Load Unpacked` in the top right
 	3.	 Head over to your cloned directory of `pocket-translator`
 	4.	 Press `Select Folder` on the `extension` folder inside the `pocket-translator`
-3. (Optional) Set up your keyboard shortcut
+4. (Optional) Set up your keyboard shortcut
 	1. Select `Keyboard Shortcuts` in the `chrome://extensions` left navigation pane
 	2. Set the desired keyboard shortcut
 		- Suggest to use `ctrl + space`
