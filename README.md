@@ -42,3 +42,13 @@ No more alt tabbing for your Jap <-> Eng translation needs!
 4. Your translation will appear in the popup momentarily
 
 	![output](img/pt-output.png)
+
+
+
+
+
+# Owner Notes
+- This is powered by Gemini with pre-loaded prompts.
+- You might encounter bugs especially when the clipboard text is a mix of Japanese and other languages (English, Russian, etc.)
+- This is particularly useful when chatting with Japanese colleagues since you won't have to go to your Google Translate tab, AI tab, etc. Just press the shortcuts, and you've got your translation all in the same tab.
+- Accuracy of translation is dependent on the AI 
