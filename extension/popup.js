@@ -9,11 +9,8 @@ async function translateClipboardText(clipboardText) {
 
         let prompt;
         if (detectedLanguage === "Japanese") {
-            prompt = `Translate the following Japanese text to English: ${clipboardText}
+            prompt = `Translate the following Japanese text to English: ${clipboardText}`;
 
-Additionally, extract all Kanji words from the text and provide their corresponding Hiragana readings in this format:
-Kanji - Hiragana
-Ensure the output is clear and structured. Return the Kanji list as separate lines.`;
         } else if (detectedLanguage === "English") {
             prompt = `Translate this to Japanese: ${clipboardText}`;
         } else {
