@@ -11,7 +11,7 @@ settingsBtn.addEventListener('click', () => {
 closeDg.addEventListener('click', () => {
     settingsBox.classList.remove('open');
     settingsBox.classList.add('close');
-    setTimeout(()=>{
+    setTimeout(() => {
         settingsBox.classList.remove('close');
         settingsBox.close();
     }, 300);
@@ -43,13 +43,7 @@ async function handleButtonTrigger() {
         const clipboardText = await navigator.clipboard.readText();
 
         chrome.runtime.sendMessage({ action: "translateClipboardText", data: clipboardText }, (response) => {
-            tabInfo.innerHTML = `
-                ${response.data}
-                <br>
-                <br>
-                ${clipboardText}
-            `;
-
+            tabInfo.innerHTML = response.data;
         })
     } catch (err) {
         tabInfo.textContent = `Error: ${err.message}`;
