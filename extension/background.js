@@ -14,12 +14,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 async function translateClipboardText(clipboardText, translationMode) {
     try {
 
-        let prompt;
+        let prompt = "";
+        prompt = "Just translate. Don't say anything else. ";
         if (translationMode === "to-eng") {
-            prompt = `Translate the following Japanese text to English: ${clipboardText}`;
+            prompt += `Translate the following Japanese text to English: ${clipboardText}`;
 
         } else if (translationMode === "to-jap") {
-            prompt = `Translate the following English text to Japanese: ${clipboardText}`;
+            prompt += `Translate the following English text to Japanese: ${clipboardText}`;
         } else {
             throw new Error("No language selected.");
         }

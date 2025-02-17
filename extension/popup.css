@@ -6,6 +6,12 @@ body {
     font-size: large;
 }
 
-.translate-modes{
-    /* display: block; */
+#radio-btns {
+    display: flex;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+label {
+    margin-right: 0.5rem;
 }
