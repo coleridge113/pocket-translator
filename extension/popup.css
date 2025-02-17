@@ -1,7 +1,58 @@
 body {
     min-width: 300px;
+    min-height: 100px;
 }
 
 #tab-info {
     font-size: large;
+}
+
+.settings {
+    display: inline-block;
+    margin-right: 0.3rem;
+}
+
+.icon-btn {
+    transition: transform 0.5s ease;
+    display: inline-block;
+}
+
+.icon-btn:active {
+    transform: rotate(360deg);
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+#settings-box {
+    position: fixed;
+    z-index: 1000;
+    height: 500px;
+    width: 200px;
+    left: -500px;
+
+    transition: left 0.3s ease;
+}
+
+#settings-box.open {
+    left: -85px;
+}
+
+#settings-box.close {
+    left: -800px;
+}
+
+#close-dg {
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+#settings-label {
+    position: absolute;
+    display: inline-block;
+    top: -10px;
+    left: 5px;
 }

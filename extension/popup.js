@@ -1,4 +1,21 @@
 const tabInfo = document.getElementById('tab-info');
+const settingsBtn = document.getElementById('settings-btn');
+const closeDg = document.getElementById('close-dg');
+const settingsBox = document.getElementById('settings-box');
+
+settingsBtn.addEventListener('click', () => {
+    settingsBox.showModal();
+    settingsBox.classList.add('open');
+})
+
+closeDg.addEventListener('click', () => {
+    settingsBox.classList.remove('open');
+    settingsBox.classList.add('close');
+    setTimeout(()=>{
+        settingsBox.classList.remove('close');
+        settingsBox.close();
+    }, 300);
+})
 
 document.getElementById('btn').addEventListener('click', async (event) => {
     event.preventDefault();
