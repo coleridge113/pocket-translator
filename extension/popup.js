@@ -26,22 +26,7 @@ async function handleButtonTrigger() {
         const clipboardText = await navigator.clipboard.readText();
 
         chrome.runtime.sendMessage({ action: "translateClipboardText", data: clipboardText }, (response) => {
-            const translatedText = response.data;
-
-            // Extract Kanji-Hiragana list if present
-            // const kanjiMatches = translatedText.match(/(.+?)\s-\s(.+)/g);
-
-            // let translationOnly = translatedText;
-            // if (kanjiMatches) {
-            //     translationOnly = translatedText.split("\n").filter(line => !line.includes("  - ")).join("\n");
-            //     kanjiMatches.forEach(pair => {
-            //         const li = document.createElement("li");
-            //         li.textContent = pair;
-            //         kanjiListContainer.appendChild(li);
-            //     });
-            // }
-
-            tabInfo.innerHTML = translatedText;
+            tabInfo.innerHTML = response.data;
         })
     } catch (err) {
         tabInfo.textContent = `Error: ${err.message}`;
