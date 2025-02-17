@@ -26,7 +26,13 @@ async function handleButtonTrigger() {
         const clipboardText = await navigator.clipboard.readText();
 
         chrome.runtime.sendMessage({ action: "translateClipboardText", data: clipboardText }, (response) => {
-            tabInfo.innerHTML = response.data;
+            tabInfo.innerHTML = `
+                ${response.data}
+                <br>
+                <br>
+                ${clipboardText}
+            `;
+
         })
     } catch (err) {
         tabInfo.textContent = `Error: ${err.message}`;
