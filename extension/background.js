@@ -21,7 +21,7 @@ async function translateClipboardText(clipboardText, translationMode) {
         } else if (translationMode === "to-jap") {
             prompt = `Translate the following English text to Japanese: ${clipboardText}`;
         } else {
-            throw new Error("Unable to detect language.");
+            throw new Error("No language selected.");
         }
 
         const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${apiKey}`, {
