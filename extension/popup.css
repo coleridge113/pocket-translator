@@ -1,7 +1,64 @@
 body {
     min-width: 300px;
+    min-height: 100px;
 }
 
 #tab-info {
     font-size: large;
+}
+
+.settings {
+    display: inline-block;
+    margin-right: 0.3rem;
+}
+
+.icon-btn {
+    transition: transform 0.5s ease;
+    display: inline-block;
+}
+
+.icon-btn:active {
+    transform: rotate(360deg);
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+#settings-window {
+    margin: 0px;
+    padding: 0;
+    z-index: 1000;
+    min-height: 110px;
+    width: 224px;
+    left: -500px;
+
+    transition: left 0.3s ease;
+}
+
+#settings-window.open {
+    left: 0px;
+}
+
+#settings-window.close {
+    left: -100%;
+}
+
+#settings-box {
+    margin-left: 2px;
+}
+
+#dialog-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    height: 1rem;
+    width: 22vw;
+    padding: 0.5rem;
+}
+
+.cb-container {
+    display: flex;
+    align-items: center;
 }

@@ -1,36 +1,28 @@
 const apiKey = "AIzaSyDJdtrcFr36QABN67S-F7qvPIW3mqKxKAQ";
 
+// Chrome comms to front-end
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request.action === 'translateClipboardText') {
-        translateClipboardText(request.data).then(response => {
+    if (request.action === "translateClipboardText") {
+        translateClipboardText(request.data['clipboardText'], request.data['settings']).then(response => {
             sendResponse({ data: response });
-        }).catch(error => {
-            sendResponse({ error: error.message });
-        })
+        }).catch(err => {
+            sendResponse({ data: err });
+        });
         return true;
-        // sendResponse(translateClipboardText(request.data));
     }
 })
 
-
-async function translateClipboardText(clipboardText) {
+// Main translate function
+async function translateClipboardText(clipboardText, settings) {
     try {
-        const detectedLanguage = await detectLanguage(clipboardText);
-        console.log("Detected Language:", detectedLanguage);
+        let prompt = `Detect whether text is in English or Japanese. If Japanese text, translate to English. 
+                    If English text, translate to Japanese. If text is neither English nor Japanese, then don't translate. Don't say anything else.
+                    Just give me the translation.
+                    Text: ${clipboardText}
+                    `;
 
-        let prompt;
-        if (detectedLanguage === "Japanese") {
-            prompt = `Translate the following Japanese text to English: ${clipboardText}
-
-                    Additionally, extract all Kanji words from the text and provide their corresponding Hiragana readings in this format:
-                    Kanji - Hiragana
-                    Ensure the output is clear and structured. Return the Kanji list as separate lines.`;
-
-        } else if (detectedLanguage === "English") {
-            prompt = `Translate this to Japanese: ${clipboardText}`;
-        } else {
-            throw new Error("Unable to detect language.");
-        }
+        // let prompt = `Just translate. Don't say anything else. If Japanese text, translate to English. 
+        //             If English text, translate to Japanese. Text: ${clipboardText}`;
 
         const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${apiKey}`, {
             method: "POST",
@@ -51,38 +43,27 @@ async function translateClipboardText(clipboardText) {
             throw new Error(`API Error: ${data.error?.message || response.statusText}`);
         }
 
-        return data.candidates?.[0]?.content?.parts?.[0]?.text || "No translation found.";
+        let translation = data.candidates?.[0]?.content?.parts?.[0]?.text || "No translation found.";
+
+        translation += checkSettings(clipboardText, settings);
+
+        return translation;
     } catch (error) {
         console.error("Translation error:", error);
         return `Error: ${error.message}`;
     }
 }
 
-async function detectLanguage(text) {
-    try {
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${apiKey}`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                // Format needed by GeminiAPI
-                contents: [{
-                    parts: [{ text: `Detect the language of this text and respond with only "English" or "Japanese": ${text}` }]
-                }]
-            })
-        });
+function checkSettings(clipboardText, settings){
+    let string = '';
 
-        const data = await response.json();
-
-        if (!response.ok) {
-            console.error("Language Detection Error:", data);
-            throw new Error("Failed to detect language.");
-        }
-
-        return data.candidates?.[0]?.content?.parts?.[0]?.text.trim() || "Unknown";
-    } catch (error) {
-        console.error("Language detection error:", error);
-        return "Unknown";
+    if (settings.length === 0) {
+        return checkboxObj;
     }
+
+    if (settings['include-source']) {
+        string += `<br><br>${clipboardText}`;
+    }
+
+    return string;
 }
