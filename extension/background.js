@@ -1,5 +1,5 @@
 const apiKey = "AIzaSyDJdtrcFr36QABN67S-F7qvPIW3mqKxKAQ";
-const settingsObj = {
+var settingsObj = {
     'list-kanji': '',
 };
 
@@ -20,11 +20,26 @@ async function translateClipboardText(clipboardText, settings) {
     checkSettings(clipboardText, settings);
 
     try {
+        // let prompt =
+        //     `Say 'yes' if you detecdt kanji, 'no' if none. If yes, respond in this format:
+        //     kanji - hiragana<br>
+
+        //     . Text: ${clipboardText}
+        //             `;
         let prompt = `Detect whether text is in English or Japanese. If Japanese text, translate to English. 
-                    If English text, translate to Japanese. If text is neither English nor Japanese, then don't translate. Don't say anything else.
-                    Just give me the translation. ${settings['kanji-list']}.
+                    If English text, translate to Japanese. If text is neither English nor Japanese, then don't translate.
+                    Just give me the translation. ${settingsObj['list-kanji']}.
                     Text: ${clipboardText}
                     `;
+        // let prompt = `Detect whether text is in English or Japanese. If Japanese text, translate to English. 
+        //             If English text, translate to Japanese. If text is neither English nor Japanese, then don't translate. Don't say anything else.
+        //             Just give me the translation.
+        //             Text: ${clipboardText}
+        //             `;
+
+        if (settingsObj['list-kanji']) {
+            prompt += settingsObj['list-kanji'];
+        }
 
         // let prompt = `Just translate. Don't say anything else. If Japanese text, translate to English. 
         //             If English text, translate to Japanese. Text: ${clipboardText}`;
@@ -50,7 +65,9 @@ async function translateClipboardText(clipboardText, settings) {
 
         let translation = data.candidates?.[0]?.content?.parts?.[0]?.text || "No translation found.";
         translation += settingsObj['include-source'];
-        settingsObj['include-source'] = '';
+        // settingsObj['include-source'] = '';
+
+        initializeSettings();
 
         return translation;
 
@@ -74,15 +91,23 @@ function checkSettings(clipboardText, settings) {
 
     if (settings['list-kanji']) {
         settingsObj['list-kanji'] = `
-                        If text has kanji, provide a breakdown in this format:
+                        Additionally, if text has kanji, provide a breakdown of ONLY THE KANJI WORDS in this format. 
+                        STRICTLY INCLUDE the <br>'s in your response:
 
-                        <br>
-                        kanji-1 - hiragana reading<br>
-                        kanji-2 - hiragana reading<br>
-                        kanji-3 - hiragana reading<br>
-                        kanji-n - hiragana reading<br>
+                        <br><br>
+                        KANJI-ONLY-word-1 - hiragana reading OF KANJI<br>
+                        KANJI-ONLY-word-2 - hiragana reading OF KANJI<br>
+                        KANJI-ONLY-word-3 - hiragana reading OF KANJI<br>
+                        KANJI-ONLY-word-nth - hiragana reading OF KANJI<br>
                         `;
     }
 
     return string;
+}
+
+function initializeSettings() {
+    settingsObj = {
+        'include-source': false,
+        'list-kanji': '',
+    };
 }
