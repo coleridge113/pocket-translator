@@ -20,12 +20,13 @@
                 </div>
                 <div id="settings-box">
                     <div class="cb-container">
-                        <input class="cb-settings cb" type="checkbox" id="cb-include-source" name="include-source" checked>Include source
+                        <input class="cb-settings cb" type="checkbox" id="cb-include-source" name="include-source"
+                            checked>Include source
                         <label for="cb-include-source">
                         </label>
                     </div>
                     <div class="cb-container">
-                        <input class="cb-settings cb" type="checkbox" id="cb-option2" >Option 2
+                        <input class="cb-settings cb" type="checkbox" id="cb-list-kanji" name="list-kanji">List kanji
                         <label for="cb-include-source">
                         </label>
                     </div>
@@ -40,7 +41,7 @@
     </div>
     <button id="btn">Translate From Clipboard</button>
     <p id="tab-info"></p>
-    <ul hidden id="kanji-list"></ul>
+    <ul hidden class="kanji-container"></ul>
 </body>
 <script src="popup.js"></script>
 
