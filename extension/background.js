@@ -1,8 +1,9 @@
 const apiKey = "AIzaSyDJdtrcFr36QABN67S-F7qvPIW3mqKxKAQ";
 
+// Chrome comms to front-end
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "translateClipboardText") {
-        translateClipboardText(request.data).then(response => {
+        translateClipboardText(request.data['clipboardText'], request.data['settings']).then(response => {
             sendResponse({ data: response });
         }).catch(err => {
             sendResponse({ data: err });
@@ -11,7 +12,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
 })
 
-async function translateClipboardText(clipboardText) {
+// Main translate function
+async function translateClipboardText(clipboardText, settings) {
     try {
         let prompt = `Detect whether text is in English or Japanese. If Japanese text, translate to English. 
                     If English text, translate to Japanese. If text is neither English nor Japanese, then don't translate. Don't say anything else.
@@ -41,16 +43,27 @@ async function translateClipboardText(clipboardText) {
             throw new Error(`API Error: ${data.error?.message || response.statusText}`);
         }
 
-        let res = data.candidates?.[0]?.content?.parts?.[0]?.text || "No translation found.";
+        let translation = data.candidates?.[0]?.content?.parts?.[0]?.text || "No translation found.";
 
-        let flag = true;
-        if (flag) {
-            res += `<br><br>${clipboardText}`;
-        }
+        translation += checkSettings(clipboardText, settings);
 
-        return res;
+        return translation;
     } catch (error) {
         console.error("Translation error:", error);
         return `Error: ${error.message}`;
     }
+}
+
+function checkSettings(clipboardText, settings){
+    let string = '';
+
+    if (settings.length === 0) {
+        return checkboxObj;
+    }
+
+    if (settings['include-source']) {
+        string += `<br><br>${clipboardText}`;
+    }
+
+    return string;
 }

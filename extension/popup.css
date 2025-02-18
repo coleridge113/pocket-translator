@@ -44,6 +44,10 @@ a:hover {
     left: -100%;
 }
 
+#settings-box {
+    margin-left: 2px;
+}
+
 #dialog-header {
     display: flex;
     align-items: center;
@@ -54,6 +58,7 @@ a:hover {
     padding: 0.5rem;
 }
 
-/* #close-dg {}
-
-#settings-label {} */
+.cb-container {
+    display: flex;
+    align-items: center;
+}
