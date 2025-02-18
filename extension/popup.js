@@ -2,6 +2,7 @@ const tabInfo = document.getElementById('tab-info');
 const settingsBtn = document.getElementById('settings-btn');
 const closeDg = document.getElementById('close-dg');
 const settingsBox = document.getElementById('settings-box');
+const CLOSE_TIMEOUT = 300;
 
 settingsBtn.addEventListener('click', () => {
     settingsBox.showModal();
@@ -14,7 +15,7 @@ closeDg.addEventListener('click', () => {
     setTimeout(() => {
         settingsBox.classList.remove('close');
         settingsBox.close();
-    }, 300);
+    }, CLOSE_TIMEOUT);
 })
 
 document.getElementById('btn').addEventListener('click', async (event) => {
