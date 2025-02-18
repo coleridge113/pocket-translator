@@ -25,7 +25,7 @@ a:hover {
     cursor: pointer;
 }
 
-#settings-box {
+#settings-window {
     margin: 0px;
     padding: 0;
     z-index: 1000;
@@ -36,11 +36,11 @@ a:hover {
     transition: left 0.3s ease;
 }
 
-#settings-box.open {
+#settings-window.open {
     left: 0px;
 }
 
-#settings-box.close {
+#settings-window.close {
     left: -100%;
 }
 

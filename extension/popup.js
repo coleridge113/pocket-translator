@@ -1,20 +1,20 @@
 const tabInfo = document.getElementById('tab-info');
 const settingsBtn = document.getElementById('settings-btn');
 const closeDg = document.getElementById('close-dg');
-const settingsBox = document.getElementById('settings-box');
+const settingsWindow = document.getElementById('settings-window');
 const CLOSE_TIMEOUT = 300;
 
 settingsBtn.addEventListener('click', () => {
-    settingsBox.showModal();
-    settingsBox.classList.add('open');
+    settingsWindow.showModal();
+    settingsWindow.classList.add('open');
 })
 
 closeDg.addEventListener('click', () => {
-    settingsBox.classList.remove('open');
-    settingsBox.classList.add('close');
+    settingsWindow.classList.remove('open');
+    settingsWindow.classList.add('close');
     setTimeout(() => {
-        settingsBox.classList.remove('close');
-        settingsBox.close();
+        settingsWindow.classList.remove('close');
+        settingsWindow.close();
     }, CLOSE_TIMEOUT);
 })
 
