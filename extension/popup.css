@@ -26,7 +26,7 @@ a:hover {
 }
 
 #settings-box {
-    position: fixed;
+    margin: 0px;
     padding: 0;
     z-index: 1000;
     min-height: 110px;
@@ -37,11 +37,11 @@ a:hover {
 }
 
 #settings-box.open {
-    left: -85px;
+    left: 0px;
 }
 
 #settings-box.close {
-    left: -800px;
+    left: -100%;
 }
 
 #dialog-header {
@@ -54,6 +54,6 @@ a:hover {
     padding: 0.5rem;
 }
 
-#close-dg {}
+/* #close-dg {}
 
-#settings-label {}
+#settings-label {} */
