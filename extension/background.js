@@ -19,6 +19,9 @@ async function translateClipboardText(clipboardText) {
                     Text: ${clipboardText}
                     `;
 
+        // let prompt = `Just translate. Don't say anything else. If Japanese text, translate to English. 
+        //             If English text, translate to Japanese. Text: ${clipboardText}`;
+
         const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${apiKey}`, {
             method: "POST",
             headers: {
