@@ -1,3 +1,5 @@
+const { exec } = require("child_process");
+
 const apiKey = "AIzaSyDJdtrcFr36QABN67S-F7qvPIW3mqKxKAQ";
 var settingsObj = {
     'list-kanji': '',
@@ -20,29 +22,17 @@ async function translateClipboardText(clipboardText, settings) {
     checkSettings(clipboardText, settings);
 
     try {
-        // let prompt =
-        //     `Say 'yes' if you detecdt kanji, 'no' if none. If yes, respond in this format:
-        //     kanji - hiragana<br>
 
-        //     . Text: ${clipboardText}
-        //             `;
         let prompt = `Detect whether text is in English or Japanese. If Japanese text, translate to English. 
                     If English text, translate to Japanese. If text is neither English nor Japanese, then don't translate.
                     Just give me the translation. ${settingsObj['list-kanji']}.
                     Text: ${clipboardText}
                     `;
-        // let prompt = `Detect whether text is in English or Japanese. If Japanese text, translate to English. 
-        //             If English text, translate to Japanese. If text is neither English nor Japanese, then don't translate. Don't say anything else.
-        //             Just give me the translation.
-        //             Text: ${clipboardText}
-        //             `;
+
 
         if (settingsObj['list-kanji']) {
             prompt += settingsObj['list-kanji'];
         }
-
-        // let prompt = `Just translate. Don't say anything else. If Japanese text, translate to English. 
-        //             If English text, translate to Japanese. Text: ${clipboardText}`;
 
         const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${apiKey}`, {
             method: "POST",
@@ -65,7 +55,6 @@ async function translateClipboardText(clipboardText, settings) {
 
         let translation = data.candidates?.[0]?.content?.parts?.[0]?.text || "No translation found.";
         translation += settingsObj['include-source'];
-        // settingsObj['include-source'] = '';
 
         initializeSettings();
 
@@ -110,4 +99,19 @@ function initializeSettings() {
         'include-source': false,
         'list-kanji': '',
     };
+}
+
+function callPython(text) {
+    const command = `python fugashi.py "${text}"`;
+    execcommand(command, (error, stdout, stderr) => {
+        if (error) {
+            console.error(`exec error: ${error}`);
+            return;
+        }
+        if (stderr) {
+            console.error(`stderr: ${stderr}`);
+            return;
+        }
+        return stdout;
+    });
 }
