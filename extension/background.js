@@ -1,6 +1,6 @@
-const { exec } = require("child_process");
+// const { exec } = require("child_process");
 
-const apiKey = "AIzaSyDJdtrcFr36QABN67S-F7qvPIW3mqKxKAQ";
+const apiKey = "AIzaSyCvTqd-N9v1ZkX_0upq1JM_TdZN4xi9kqw";
 var settingsObj = {
     'list-kanji': '',
 };
@@ -34,7 +34,7 @@ async function translateClipboardText(clipboardText, settings) {
             prompt += settingsObj['list-kanji'];
         }
 
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${apiKey}`, {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
