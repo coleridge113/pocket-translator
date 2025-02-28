@@ -1,4 +1,4 @@
-// const { exec } = require("child_process");
+
 
 const apiKey = "AIzaSyCvTqd-N9v1ZkX_0upq1JM_TdZN4xi9kqw";
 var settingsObj = {
@@ -56,6 +56,8 @@ async function translateClipboardText(clipboardText, settings) {
         let translation = data.candidates?.[0]?.content?.parts?.[0]?.text || "No translation found.";
         translation += settingsObj['include-source'];
 
+
+
         initializeSettings();
 
         return translation;
@@ -76,6 +78,8 @@ function checkSettings(clipboardText, settings) {
 
     if (settings['include-source']) {
         settingsObj['include-source'] = `<br><br>${clipboardText}`;
+    } else {
+        settingsObj['include-source'] = '';
     }
 
     if (settings['list-kanji']) {
@@ -99,19 +103,4 @@ function initializeSettings() {
         'include-source': false,
         'list-kanji': '',
     };
-}
-
-function callPython(text) {
-    const command = `python fugashi.py "${text}"`;
-    execcommand(command, (error, stdout, stderr) => {
-        if (error) {
-            console.error(`exec error: ${error}`);
-            return;
-        }
-        if (stderr) {
-            console.error(`stderr: ${stderr}`);
-            return;
-        }
-        return stdout;
-    });
 }
