@@ -1,6 +1,5 @@
-
-
 const apiKey = "AIzaSyCvTqd-N9v1ZkX_0upq1JM_TdZN4xi9kqw";
+
 var settingsObj = {
     'list-kanji': '',
 };
@@ -77,7 +76,7 @@ function checkSettings(clipboardText, settings) {
     }
 
     if (settings['include-source']) {
-        settingsObj['include-source'] = `<br><br>${clipboardText}`;
+        settingsObj['include-source'] = `<br>${clipboardText}`;
     } else {
         settingsObj['include-source'] = '';
     }
